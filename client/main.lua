@@ -1,4 +1,4 @@
-local PlayerData, CurrentActionData, handcuffTimer, dragStatus, blipsCops, currentTask, spawnedVehicles = {}, {}, {}, {}, {}, {}, {}
+local PlayerData, CurrentActionData, HandcuffTimer, dragStatus, blipsCops, currentTask, spawnedVehicles = {}, {}, {}, {}, {}, {}, {}
 local HasAlreadyEnteredMarker, isDead, IsHandcuffed, hasAlreadyJoined, playerInService, isInShopMenu = false, false, false, false, false, false
 local LastStation, LastPart, LastPartNum, LastEntity, CurrentAction, CurrentActionMsg
 dragStatus.isDragged = false
@@ -1441,15 +1441,15 @@ AddEventHandler('esx_policejob:handcuff', function()
 			DisplayRadar(false)
 
 			if Config.EnableHandcuffTimer then
-				if handcuffTimer.active then
-					ESX.ClearTimeout(handcuffTimer.task)
+				if HandcuffTimer.active then
+					ESX.ClearTimeout(HandcuffTimer.task)
 				end
 
 				StartHandcuffTimer()
 			end
 		else
-			if Config.EnableHandcuffTimer and handcuffTimer.active then
-				ESX.ClearTimeout(handcuffTimer.task)
+			if Config.EnableHandcuffTimer and HandcuffTimer.active then
+				ESX.ClearTimeout(HandcuffTimer.task)
 			end
 
 			ClearPedSecondaryTask(playerPed)
@@ -1476,8 +1476,8 @@ AddEventHandler('esx_policejob:unrestrain', function()
 		DisplayRadar(true)
 
 		-- end timer
-		if Config.EnableHandcuffTimer and handcuffTimer.active then
-			ESX.ClearTimeout(handcuffTimer.task)
+		if Config.EnableHandcuffTimer and HandcuffTimer.active then
+			ESX.ClearTimeout(HandcuffTimer.task)
 		end
 	end
 end)
@@ -1962,24 +1962,24 @@ AddEventHandler('onResourceStop', function(resource)
 			TriggerServerEvent('esx_service:disableService', 'police')
 		end
 
-		if Config.EnableHandcuffTimer and handcuffTimer.active then
-			ESX.ClearTimeout(handcuffTimer.task)
+		if Config.EnableHandcuffTimer and HandcuffTimer.active then
+			ESX.ClearTimeout(HandcuffTimer.task)
 		end
 	end
 end)
 
 -- handcuff timer, unrestrain the player after an certain amount of time
 function StartHandcuffTimer()
-	if Config.EnableHandcuffTimer and handcuffTimer.active then
-		ESX.ClearTimeout(handcuffTimer.task)
+	if Config.EnableHandcuffTimer and HandcuffTimer.active then
+		ESX.ClearTimeout(HandcuffTimer.task)
 	end
 
-	handcuffTimer.active = true
+	HandcuffTimer.active = true
 
-	handcuffTimer.task = ESX.SetTimeout(Config.handcuffTimer, function()
+	HandcuffTimer.task = ESX.SetTimeout(Config.HandcuffTimer, function()
 		ESX.ShowNotification(_U('unrestrained_timer'))
 		TriggerEvent('esx_policejob:unrestrain')
-		handcuffTimer.active = false
+		HandcuffTimer.active = false
 	end)
 end
 
